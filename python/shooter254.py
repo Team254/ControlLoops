@@ -14,11 +14,11 @@ class Shooter(control_loop.ControlLoop):
     # Stall Current in Amps
     self.stall_current = 85
     # Free Speed in RPM
-    self.free_speed = 19300.0 - 4000.0
+    self.free_speed = 19300.0 - 4950.0
     # Free Current in Amps
     self.free_current = 1.4
     # Moment of inertia of the shooter wheel in kg m^2
-    self.J = 0.00023
+    self.J = 0.00029
     # Resistance of the motor, divided by 2 to account for the 2 motors
     self.R = 12.0 / self.stall_current / 2
     # Motor velocity constant
@@ -27,7 +27,7 @@ class Shooter(control_loop.ControlLoop):
     # Torque constant
     self.Kt = self.stall_torque / self.stall_current
     # Gear ratio
-    self.G = 14.0 / 16.0
+    self.G = 11.0 / 14.0
     # Control loop time step
     self.dt = 0.01
 
@@ -66,12 +66,12 @@ class ShooterDeltaU(Shooter):
 
     self.B = numpy.matrix([[1.0],
                            [0.0]])
-    self.B[1:2, 0:1] = B_unaugmented
+   #self.B[1:2, 0:1] = B_unaugmented
 
     self.C = numpy.matrix([[0.0, 1.0]])
     self.D = numpy.matrix([[0.0]])
 
-    self.PlaceControllerPoles([0.75, 0.35])
+    self.PlaceControllerPoles([0.7, 0.32])
 
     print "K"
     print self.K
@@ -80,7 +80,7 @@ class ShooterDeltaU(Shooter):
 
     self.rpl = .05
     self.ipl = 0.008
-    self.PlaceObserverPoles([0.50, 0.90])
+    self.PlaceObserverPoles([0.75, 0.8])
     print "Placed observer poles are"
     print numpy.linalg.eig(self.A - self.L * self.C)[0]
 

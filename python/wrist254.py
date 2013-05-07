@@ -6,18 +6,18 @@ import sys
 from matplotlib import pylab
 
 class Wrist(control_loop.ControlLoop):
-  def __init__(self, name="RawWrist"):
+  def __init__(self, name="Wrist"):
     super(Wrist, self).__init__(name)
     # Stall Torque in N m
     self.stall_torque = 1.175 * 0.7
     # Stall Current in Amps
     self.stall_current = 130
     # Free Speed in RPM
-    self.free_speed = 19500.0
+    self.free_speed = 19500.0 + 4000
     # Free Current in Amps
     self.free_current = 1.4
     # Moment of inertia of the wrist in kg m^2
-    self.J = 2.0
+    self.J = 1.25
     # Resistance of the motor
     self.R = 18.0 / self.stall_current + 0.024 + .003
     # Motor velocity constant
@@ -43,10 +43,14 @@ class Wrist(control_loop.ControlLoop):
     self.A, self.B = self.ContinuousToDiscrete(
         self.A_continuous, self.B_continuous, self.dt)
 
-    self.PlaceControllerPoles([0.80, 0.5])
+    # controller poles
+    self.PlaceControllerPoles([0.87, 0.7])
+    # osci - pull apart
+    # slow - closer together
 
-    self.rpl = .05
-    self.ipl = 0.008
+    # observer poles
+    self.rpl = .07
+    self.ipl = 0.004
     self.PlaceObserverPoles([self.rpl + 1j * self.ipl,
                              self.rpl - 1j * self.ipl])
 
@@ -96,8 +100,8 @@ def main(argv):
     print "Expected .h file name and .cc file name for"
     print "both the plant and unaugmented plant"
   else:
-    wrist = Wrist("RawWrist")
-    loop_writer = control_loop.ControlLoopWriter("RawWrist",
+    wrist = Wrist("Wrist")
+    loop_writer = control_loop.ControlLoopWriter("Wrist",
                                                        [wrist])
     loop_writer.Write(argv[1])
 

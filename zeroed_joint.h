@@ -410,29 +410,6 @@ double ZeroedJoint<kNumZeroSensors>::Update(
       loop_->X_hat(0, 0), loop_->X_hat(1, 0), loop_->X_hat(2, 0));
 
   capped_goal_ = false;
-  // Verify that the zeroing goal hasn't run away.
-  switch (state_) {
-    case UNINITIALIZED:
-    case READY:
-    case ESTOP:
-      // Not zeroing.  No worries.
-      break;
-    case MOVING_OFF:
-    case ZEROING:
-      // Check if we have cliped and adjust the goal.
-      if (loop_->uncapped_voltage() > config_data_.max_zeroing_voltage) {
-        double dx = (loop_->uncapped_voltage() -
-                     config_data_.max_zeroing_voltage) / loop_->K(0, 0);
-        zeroing_position_ -= dx;
-        capped_goal_ = true;
-      } else if(loop_->uncapped_voltage() < -config_data_.max_zeroing_voltage) {
-        double dx = (loop_->uncapped_voltage() +
-                     config_data_.max_zeroing_voltage) / loop_->K(0, 0);
-        zeroing_position_ -= dx;
-        capped_goal_ = true;
-      }
-      break;
-  }
   if (output_enabled) {
     double voltage = loop_->voltage();
     if (voltage > 0) {

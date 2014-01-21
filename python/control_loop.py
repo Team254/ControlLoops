@@ -61,9 +61,9 @@ class ControlLoopWriter(object):
   def WriteJava(self, java_file):
     """Writes the java file to the file named java_file."""
     with open(java_file, 'w') as fd:
-      fd.write('package com.team254.frc2013;\n')
+      fd.write('package com.team254.frc2014;\n')
       fd.write('\n')
-      fd.write('import com.team254.lib.control.StateSpaceGains;\n')
+      fd.write('import com.team254.lib.StateSpaceGains;\n')
       fd.write('\n')
       fd.write('public class %sGains {\n' % self._gain_schedule_name)
       fd.write('  static public StateSpaceGains[] getGains() {\n')

@@ -9,24 +9,24 @@ class Wrist(control_loop.ControlLoop):
   def __init__(self, name="Wrist"):
     super(Wrist, self).__init__(name)
     # Stall Torque in N m
-    self.stall_torque = 1.175 * 0.7
+    self.stall_torque = 1.4
     # Stall Current in Amps
-    self.stall_current = 130
+    self.stall_current = 86
     # Free Speed in RPM
-    self.free_speed = 19500.0 + 4000
+    self.free_speed = 6200 
     # Free Current in Amps
-    self.free_current = 1.4
+    self.free_current = 1.5
     # Moment of inertia of the wrist in kg m^2
-    self.J = 1.25
+    self.J = 3
     # Resistance of the motor
-    self.R = 18.0 / self.stall_current + 0.024 + .003
+    self.R = 12.0 / self.stall_current / 2
     # Motor velocity constant
     self.Kv = ((self.free_speed / 60.0 * 2.0 * numpy.pi) /
-               (18.0 - self.R * self.free_current))
+              (12.0 - self.R * self.free_current))
     # Torque constant
     self.Kt = self.stall_torque / self.stall_current
     # Gear ratio
-    self.G = (12.0 / 60.0) * (14.0 / 50.0) * (14.0 / 72.0) * (20.0 / 72.0)
+    self.G = 1.0 / 30.0
     # Control loop time step
     self.dt = 0.01
 
@@ -67,7 +67,7 @@ def main(argv):
   simulated_v = []
   simulated_i = []
   simulated_u = []
-  R = numpy.matrix([[numpy.pi / 2.0], [0.0]])
+  R = numpy.matrix([[numpy.pi /2.0], [0.0]])
   time = []
   print wrist.G
   power = []

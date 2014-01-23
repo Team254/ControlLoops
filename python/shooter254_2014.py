@@ -14,11 +14,11 @@ class Shooter(control_loop.ControlLoop):
     # Stall Current in Amps
     self.stall_current = 86
     # Free Speed in RPM
-    self.free_speed = 6200 #19300.0 - 4950.0
+    self.free_speed = 6200 - 2000#19300.0 - 4950.0
     # Free Current in Amps
     self.free_current = 1.5
     # Moment of inertia of the shooter wheel in kg m^2
-    self.J = 0.0018728943187200002
+    self.J = 0.0027 #0.0018728943187200002
     # Resistance of the motor, divided by 2 to account for the 2 motors
     self.R = 12.0 / self.stall_current / 2
     # Motor velocity constant
@@ -27,7 +27,7 @@ class Shooter(control_loop.ControlLoop):
     # Torque constant
     self.Kt = self.stall_torque / self.stall_current
     # Gear ratio
-    self.G = 15.0 / 15.0
+    self.G = 22.0 / 16.0
     # Control loop time step
     self.dt = 0.01
 
@@ -92,7 +92,7 @@ class ShooterDeltaU(Shooter):
 
 def main(argv):
   # Simulate the response of the system to a step input.
-  shooter_data = numpy.genfromtxt('shooter/shooter_data254.csv', delimiter=',')
+  shooter_data = numpy.genfromtxt('shooter/shooter_data254_2014_new_wheel.csv', delimiter=',')
   shooter = Shooter()
   simulated_v = []
   real_x = []

@@ -10,15 +10,15 @@ class Shooter(control_loop.ControlLoop):
   def __init__(self, name="Shooter"):
     super(Shooter, self).__init__(name)
     # Stall Torque in N m
-    self.stall_torque = 0.49819248
+    self.stall_torque = 1.4
     # Stall Current in Amps
-    self.stall_current = 85
+    self.stall_current = 86
     # Free Speed in RPM
-    self.free_speed = 19300.0 - 3100.0
+    self.free_speed = 11200
     # Free Current in Amps
-    self.free_current = 1.4
+    self.free_current = 1.5
     # Moment of inertia of the shooter wheel in kg m^2
-    self.J = 0.003
+    self.J = 0.0053
     # Resistance of the motor, divided by 2 to account for the 2 motors
     self.R = 12.0 / self.stall_current / 2.0
     # Motor velocity constant
@@ -27,9 +27,9 @@ class Shooter(control_loop.ControlLoop):
     # Torque constant
     self.Kt = self.stall_torque / self.stall_current
     # Gear ratio
-    self.G = 10.0 / 22.0
+    self.G = 19.0 / 30.0
     # Control loop time step
-    self.dt = 0.005
+    self.dt = 0.010
 
     # State feedback matrices
     self.A_continuous = numpy.matrix(

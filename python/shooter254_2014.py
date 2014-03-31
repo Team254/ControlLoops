@@ -14,7 +14,7 @@ class Shooter(control_loop.ControlLoop):
     # Stall Current in Amps
     self.stall_current = 85
     # Free Speed in RPM
-    self.free_speed = 19300.0 - 6200.0
+    self.free_speed = 19300.0 - 3100.0
     # Free Current in Amps
     self.free_current = 1.4
     # Moment of inertia of the shooter wheel in kg m^2
@@ -29,7 +29,7 @@ class Shooter(control_loop.ControlLoop):
     # Gear ratio
     self.G = 10.0 / 22.0
     # Control loop time step
-    self.dt = 0.01
+    self.dt = 0.005
 
     # State feedback matrices
     self.A_continuous = numpy.matrix(
@@ -92,7 +92,7 @@ class ShooterDeltaU(Shooter):
 
 def main(argv):
   # Simulate the response of the system to a step input.
-  shooter_data = numpy.genfromtxt('shooter/shooter_data254_2014_new_wheel.csv', delimiter=',')
+  shooter_data = numpy.genfromtxt('shooter/shooter_data254_2014.csv', delimiter=',')
   shooter = Shooter()
   simulated_v = []
   real_x = []

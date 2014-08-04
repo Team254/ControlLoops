@@ -2,4 +2,4 @@
 #
 # Updates the shooter controller.
 
-./python/shooter.py shooter/shooter_motor_plant.h shooter/shooter_motor_plant.cc
+./python/shooter.py shooter/shooter_data.csv shooter/ShooterGains.java shooter/ShooterGains2.java
